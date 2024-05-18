@@ -1,0 +1,104 @@
+[gd_scene load_steps=15 format=3 uid="uid://t7lpyymjhthv"]
+
+[ext_resource type="Texture2D" uid="uid://eo15qkd4hqk2" path="res://assets/monster_sprites.png" id="1_5enb8"]
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_kv3ga"]
+[ext_resource type="AudioStream" uid="uid://wtn0ori8y5xr" path="res://assets/monster_die.wav" id="2_qx83v"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qdpvd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_for1y"]
+atlas = ExtResource("1_5enb8")
+region = Rect2(0, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3xcuv"]
+atlas = ExtResource("1_5enb8")
+region = Rect2(256, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_isjbj"]
+atlas = ExtResource("1_5enb8")
+region = Rect2(512, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kh6dc"]
+atlas = ExtResource("1_5enb8")
+region = Rect2(768, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_flmmw"]
+atlas = ExtResource("1_5enb8")
+region = Rect2(1024, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7verh"]
+atlas = ExtResource("1_5enb8")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2qm8y"]
+atlas = ExtResource("1_5enb8")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grmde"]
+atlas = ExtResource("1_5enb8")
+region = Rect2(512, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ikpq1"]
+atlas = ExtResource("1_5enb8")
+region = Rect2(768, 0, 256, 256)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_igbw3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_for1y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3xcuv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_isjbj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kh6dc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flmmw")
+}],
+"loop": false,
+"name": &"death",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7verh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2qm8y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grmde")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ikpq1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 7.0
+}]
+
+[node name="Enemy" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_kv3ga")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_qdpvd")
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15558, 0)
+pixel_size = 0.009
+billboard = 2
+sprite_frames = SubResource("SpriteFrames_igbw3")
+animation = &"death"
+autoplay = "idle"
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_qx83v")
+bus = &"Sfx"
